@@ -1,14 +1,8 @@
 {
-    "name": "robwittman/leaky-bucket-rate-limiter",
+    "name": "spysystem/leaky-bucket-rate-limiter",
     "description": "PSR-7 Middleware for implementing a Leaky Bucket Rate Limiter",
-    "authors": [
-        {
-            "name": "Rob Wittman",
-            "email": "rob@ihsdigital.com"
-        }
-    ],
     "require": {
-        "php" : "^5.5 || ^7.0",
+        "php" : "^7.0",
         "predis/predis": "^1.1",
         "zendframework/zend-diactoros": "^1.3"
     },
