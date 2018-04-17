@@ -149,7 +149,14 @@ class RateLimiter {
      * @return
      */
     protected function get($key) {
-        return json_decode($this->storage->get($key), TRUE);
+    	try
+		{
+			return json_decode($this->storage->get($key), TRUE);
+		}
+		catch(\Exception $oException)
+		{
+			return null;
+		}
     }
 
     /**
