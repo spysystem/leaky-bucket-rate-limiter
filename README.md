@@ -181,29 +181,3 @@ $slim->add(new RateLimiter([
     // Rate limiter settings
 ], $storage));
 ```
-
-### Development / Testing
-
-This library comes packaged with a Docker environment for testing and development. If you're not using Docker, you ought to be!
-
-To bootstrap an environment using docker-compose, simply
-
-`docker-compose up`
-
-This generates a PHP container with source code and packages, running a local dev server. It also provisions and links a Redis container to use as your storage mechanism.
-
-If you're not using docker-compose, or want to implement a different storage system, you can launch a solo container.
-
-```
-docker build -t <tag-name> .
-
-docker run -v $PWD:/opt -p "8001:8001" <container_name>
-```
-
-The server can be accessed at :8001, and contains a mini app to play around with. Running tests is equally as easy, and is centered around docker
-
-```shell
-docker-compose up
-docker-compose exec web bash
-vendor/bin/phpunit
-```

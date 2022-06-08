@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 
 class BucketTest extends TestCase {
 
-    public function setUp() {
+    public function setUp(): void {
         $this->bucket = new LeakyBucketRateLimiter\Bucket();
     }
 
@@ -41,9 +41,5 @@ class BucketTest extends TestCase {
     public function testLeakRate() {
         $this->bucket->setLeakRate(1.33);
         $this->assertEquals($this->bucket->getLeakRate(), 1.33);
-    }
-
-    public function testLeak() {
-        // TODO: Write test method for leak
     }
 }
