@@ -3,6 +3,7 @@
 use PHPUnit\Framework\TestCase;
 
 class BucketTest extends TestCase {
+    protected LeakyBucketRateLimiter\Bucket $bucket;
 
     public function setUp(): void {
         $this->bucket = new LeakyBucketRateLimiter\Bucket();

@@ -1,12 +1,9 @@
 <?php
 
-use Laminas\Diactoros\Request;
-use Laminas\Diactoros\Response;
-use Laminas\Diactoros\Uri;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\TestCase;
-
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 class RateLimiterTest extends TestCase {
     protected $storage = [
@@ -21,18 +18,16 @@ class RateLimiterTest extends TestCase {
 
 	public function testUnspecifiedCallback() {
 		$this->expectException(InvalidArgumentException::class);
-		$limiter = new LeakyBucketRateLimiter\RateLimiter([
+		new LeakyBucketRateLimiter\RateLimiter([
             'throttle' => function() {}
         ]);
-        $limiter();
     }
 
 	public function testUnspecifiedThrottleCallback() {
 		$this->expectException(InvalidArgumentException::class);
-		$limiter = new LeakyBucketRateLimiter\RateLimiter([
+		new LeakyBucketRateLimiter\RateLimiter([
             'callback' => function() {}
         ]);
-        $limiter();
     }
 
 	public function testInvalidCallback() {
@@ -43,9 +38,7 @@ class RateLimiterTest extends TestCase {
             },
             'throttle' => 'invalid_callback'
         ], $this->storage);
-        $request = (new Request)
-            ->withUri(new Uri("https://example.com/api"))
-            ->withMethod("GET");
+        $request = new Request('GET', new Uri("https://example.com/api"));
         $response = new Response;
         $limiter($request, $response, function() {});
     }
@@ -60,9 +53,7 @@ class RateLimiterTest extends TestCase {
             },
             'throttle' => 'invalid_callback'
         ], $this->storage);
-        $request = (new Request)
-            ->withUri(new Uri("https://example.com/api"))
-            ->withMethod("GET");
+        $request = new Request('GET', new Uri("https://example.com/api"));
         $response = new Response;
         $limiter($request, $response, function() {});
     }
@@ -75,9 +66,7 @@ class RateLimiterTest extends TestCase {
             },
             'throttle' => '',
         ], $this->storage);
-        $request = (new Request)
-            ->withUri(new Uri("https://example.com/api"))
-            ->withMethod("GET");
+        $request = new Request('GET', new Uri("https://example.com/api"));
         $response = new Response;
         $limiter($request, $response, function() {});
     }
@@ -92,9 +81,7 @@ class RateLimiterTest extends TestCase {
             },
             'throttle' => '',
         ], $this->storage);
-        $request = (new Request)
-            ->withUri(new Uri("https://example.com/api"))
-            ->withMethod("GET");
+        $request = new Request('GET', new Uri("https://example.com/api"));
         $response = new Response;
         $limiter($request, $response, function() {});
     }
@@ -110,9 +97,7 @@ class RateLimiterTest extends TestCase {
 //            },
 //            'throttle' => ''
 //        ], $this->storage);
-//        $request = (new Request)
-//            ->withUri(new Uri("https://example.com/api"))
-//            ->withMethod("GET");
+//        $request = new Request('GET', new Uri("https://example.com/api"));
 //        $response = new Response;
 //        $limiter($request, $response, function($req, $res) {
 //            $this->assertContains("X-Rate-Limit", array_keys($res->getHeaders()));
@@ -130,9 +115,7 @@ class RateLimiterTest extends TestCase {
 //            'throttle' => '',
 //            'header' => 'X-Api-Rate-Limit'
 //        ], $this->storage);
-//        $request = (new Request)
-//            ->withUri(new Uri("https://example.com/api"))
-//            ->withMethod("GET");
+//        $request = new Request('GET', new Uri("https://example.com/api"));
 //        $response = new Response;
 //        $limiter($request, $response, function($req, $res) {
 //            $this->assertContains("X-Api-Rate-Limit", array_keys($res->getHeaders()));
@@ -150,9 +133,7 @@ class RateLimiterTest extends TestCase {
 //            'throttle' => '',
 //            'header' => false
 //        ], $this->storage);
-//        $request = (new Request)
-//            ->withUri(new Uri("https://example.com/api"))
-//            ->withMethod("GET");
+//        $request = new Request('GET', new Uri("https://example.com/api"));
 //        $response = new Response;
 //        $limiter($request, $response, function($req, $res) {
 //            $this->assertEmpty(array_keys($res->getHeaders()));
